@@ -1,0 +1,8 @@
+5 7
+aaaaaaa
+a     a
+a     a
+a     a
+aaaaaaa
+3 3
+r

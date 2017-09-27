@@ -1,0 +1,15 @@
+12 7
+00aaaa 
+0a    a
+a     a
+a     a
+a     a
+a     a
+a     a
+a  aa a
+a  a  a
+a     a
+a     a
+ aaaaaa
+4 2
+.
