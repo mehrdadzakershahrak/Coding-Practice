@@ -1,0 +1,336 @@
+struct Node {
+    int data;
+    Node * parent;
+    Node * left;
+    Node * right;
+};
+
+Node createMinTree (vector<int> & arr, int i, int j) {
+    if (i == j) {
+        return new Node {arr[i], nullptr, nullptr};
+    }
+    if (i > j) { return nullptr;}
+    int mid = (i + j) / 2;
+    Node root = new Node {arr[mid], nullptr, nullptr};
+    root->left = createMinTree(arr, i , mid - 1);
+    root->right = createMinTree(arr, mid + 1, j);
+    return root;
+}
+
+int listDepth(Node * root, unordered_map<int, list<Node *>> & lists){
+    if (root == nullptr) { return 0; }
+    int left = listDepth(root->left, lists);
+    int right = listDepth(root->right, lists);
+    int h = 1 + max(left, right);
+    lists[h].push_back(root);
+    return h;
+}
+
+bool isBalanced(Node * root, int & height) {
+    if (root == nullptr) {
+        height = 0;
+        return true;
+    }
+    int leftheight, rightheight;
+    bool leftBalanced = isBalanced(root->left, leftheight);
+    bool rightBalanced = isBalanced(root->right, rightheight);
+    height = 1 + max(leftheight, rightheight);
+    return leftBalanced && rightBalanced && abs(leftheight - rightheight) <= 1;
+}
+
+void inorder(Node * root) {
+    if (root == nullptr) { return; }
+    inorder(root->right);
+    inorder(root->left);
+}
+
+Node * getSuccessor(Node * node) {
+    if (node == nullptr) { return nullptr; }
+    if (node->right != nullptr) {
+        Node * cursor = node->right;
+        while (cursor->left != nullptr) {
+            cursor = cursor->left;
+        }
+        return cursor;
+    }
+    if (node->parent == nullptr) {
+        return nullptr;
+    }
+    Node * cursor = node;
+    while (cursor->parent != nullptr && cursor->parent->right == cursor) {
+        cursor = cursor->parent;
+    }
+    return cursor->parent;
+}
+
+struct Node {
+    int data;
+    Node * next;
+};
+
+void swapLL(Node * head, int length, Node * & next) {
+    if (head == nullptr || length == 0) {
+        next = head;
+        return;
+    }
+
+    if (length == 1) {
+        next = head->next;
+        return;
+    }
+
+    swapLL(head->next, length-2, next);
+    swap(head, next);
+    return;
+}
+
+pair<Node *, bool> findCommonAns(Node * root, int a, int b) {
+    if (root == nullptr) {
+        return {nullptr, false};
+    }
+    if (root->data == a && root->data == b) {
+        return {root, true};
+    }
+    auto lx = findCommonAns(root->left, a, b);
+    if (lx.second) {
+        return lx;
+    }
+    auto rx = findCommonAns(root->right, a, b);
+    if (rx.second) {
+        return rx;
+    }
+    if (lx.first != nullptr && rx.first != nullptr) {
+        return {root, true};
+    }
+    else if (root->data == a || root->data == b) {
+        return {root, true};
+    }
+    else {
+        return {(lx.first != nullptr ? lx.first : rx.first), false};
+    }
+}
+
+=================================
+vector<nodes> topological_sort(Graph & g) {
+    l = vector<nodes> work_order;
+    s = vector<nodes> no_edge;
+    while(!s.empty()) {
+        nodes one = no_edge.erase(no_edge.begin());
+        work_order.push_back(one);
+        for (nodes m : getAdjacent(n)) {
+            removeEdge(m,n);
+            if (hasNoEdge(m)) {
+                no_edge.push_back(m);
+            }
+        }
+    if (g.hasEdge()) {
+        cout << "cycle detected";
+    }
+    return l;
+    }
+}
+
+bool hasEdge() {
+    bool edge = false;
+    for (nodes n : g.getNodes()) {
+        if (!hasNoEdge(n)) {
+            edge = true;
+            return edge;
+        }
+    }
+    return edge;
+}
+====================================
+
+Node * intersection(Node * h1, Node * h2) {
+    int s1 = calculateSize(h1);
+    int s2 = calculateSize(h2);
+    Node * shorter = (s1 < s2 ? h1 : h2);
+    Node * longer = (s1 < s2 ? h2 : h1);
+    int sizeDiff = (s1 < s2 ? (s2 - s1) : (s1 - s2));
+    for (int i = 0; i < sizeDiff; i++) {
+        longer = longer->next;
+    }
+    while (shorter != longer) {
+        longer = longer->next;
+        shorter = shorter->next;
+    }
+    return shorter;
+}
+=======================================
+int binarySearch(vector<int> & arr, int value, int low, int high) {
+    if (low > high) {
+        return -1;
+    }
+    int mid = (low + high) / 2;
+    if (arr[mid] > value) {
+        return binarySearch(arr, value, low, mid-1);
+    }
+    else if (arr[mid] < value) {
+        return binarySearch(arr, value, mid+1, high);
+    }
+    else {
+        return mid;
+    }
+}
+
+void quickSort(int & arr[], int low, int high) {
+    if (low >= high) { return; }
+    int p = partition (arr, low, high);
+    quickSort(arr, low, p - 1);
+    quickSort(arr, p + 1, high);
+}
+
+int partition(int & arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+    for (int j = low; low < high - 1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i+1], arr[high]);
+    return i+1;
+}
+==============================================
+void preOrder(Tree * root, ostream & output) {
+    if (root == nullptr) {
+        output << "* ";
+        return;
+    }
+    output << root->data << " ";
+    preOrder(root->left, output);
+    preOrder(root->right, output);
+}
+ostringstream oss1, oss2;
+preOrder(T1, oss1);
+preOrder(T2, oss2);
+str1 = oss1.str();
+str2 = oss2.str();
+auto pos = str1.find(str2);
+==============================================
+unordered_set<Position> visited;
+        list<Position> que;
+        que.push_back({r, c});
+        while (!que.empty()) {
+            Position next = que.front();
+            que.pop_front();
+            if (visited.find(next) == visited.end()) {
+                visited.insert(next);
+                auto vn = getValidNeighbors(next.row, next.col);
+                for (auto p :vn) {
+                    if (grid[p.row][p.col] == 1) {
+                        que.push_back(p);
+                    }
+                }
+            }
+        }
+        for (auto x : visited) {
+            memo[x] = visited.size();
+        }
+        return visited.size();
+
+=================================
+
+long countWaysToChange(const vector<int>& coins, int money) {
+    int C = coins.size();
+    // DP[c, m] means the number of ways we can change m only using
+    // the first c coins
+    vector<vector<long>> DP(C + 1, vector<long>(money + 1, 0));
+    for (int c = 0; c <= C; c++) {
+        DP[c][0] = 1;
+    }
+    for (int m = 1; m <= money; m++) {
+        for (int c = 1; c <= C; c++) {
+            int rem = m - coins[c - 1];
+            DP[c][m] = DP[c - 1][m] + (rem < 0 ? 0 : DP[c][rem]);
+        }
+    }
+    return DP[C][money];
+}
+
+
+
+long make_change(vector<int> coins, int money) {
+    vector<long> DP(money + 1, 0);
+    DP[0] = 1;
+    for (int c : coins) {
+        for (int m = c; m <= money; m++) {
+            DP[m] += DP[m - c];
+        }
+    }
+    return DP[money];
+}
+=====================================
+void zeroRow(int r, vector<vector<int>> &matrix) {
+    int n = matrix[0].size();
+    for (int i = 0; i < n; i++) {
+        matrix[r][i] = 0;
+    }
+}
+
+void zero(vector<vector<int>> &matrix) {
+    int m = matrix.size();
+    int n = matrix[0].size();
+    bool rowOneHasZero = false;
+    for (int r = 0; r < m; r++) {
+        for (int c = 0; c < n; c++) {
+            if (matrix[r][c] == 0) {
+                if (r == 0) {
+                    rowOneHasZero = true;
+                } else {
+                    matrix[0][c] = 0;
+                    zeroRow(r, matrix);
+                    break;  // Very important!
+                }
+            }
+        }
+    }
+    for (int c = 0; c < n; c++) {
+        if (matrix[0][c] == 0) {
+            for (int r = 0; r < m; r++) {
+                matrix[r][c] = 0;
+            }
+        }
+    }
+    if (rowOneHasZero) {
+        zeroRow(0, matrix);
+    }
+}
+
+=====================================
+string decomp (string s) {
+    string result;
+    int i = 0;
+    while (i < s.size()) {
+        if (!isdigit(s[i])) {
+            result += s[i];
+            i++;
+            continue;
+        }
+        int number = 0;
+        string substr;
+        while (isdigit(s[i])) {
+            number = number * 10 + (s[i] - '0');
+            i++;
+        }
+        i++;
+        int match = 1;
+        while (match > 0) {
+            if (s[i] == '[') {
+                match++;
+            }
+            if (s[i] == ']') {
+                match--;
+            }
+            substr += s[i];
+            i++;
+        }
+        substr = decomp(substr.substr(0,substr.size()-1));
+        for (int repeat = 0; repeat < number; repeat++) {
+            result += substr;
+        }
+    }
+    return result;
+}

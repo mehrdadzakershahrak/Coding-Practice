@@ -19,7 +19,7 @@ bool isPalindromeHelper(Node * head, int length, Node * & next) {
     next = head->next;
     return true;
   }
-  auto restOk = isPalindromeHelper(head->next, length - 2,next);
+  auto restOk = isPalindromeHelper(head->next, length - 2, next);
   if (!restOk) {
     return false;
   }
