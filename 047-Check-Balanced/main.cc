@@ -54,7 +54,7 @@ bool isBalanced(BSTNode * root, int & height) {
     bool leftBalanced = isBalanced(root->left, leftHeight);
     bool rightBalanced = isBalanced(root->right, rightHeight);
     height =  1 + max(leftHeight, rightHeight);
-    return leftBalanced && rightBalanced && abs(leftHeight - rightHeight) <= 1;
+    return leftBalanced && rightBalanced && abs(leftHeight - rightHeight) <= 1 ;
 }
 
 bool isBalanced(BSTNode * root) {

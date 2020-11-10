@@ -6,11 +6,26 @@ using namespace std;
 
 bool isSubstr(string s1, string s2) {
     // Checks if s2 is substr of s1
-    return s1.find(s2) != string::npos;
+    int len_isSub = s2.size();
+    int count = 0;
+    for (int i = 0; i < s1.size(); i++) {
+        if (s1[i] == s2[count]) {
+            count++;
+        }
+        if (count == len_isSub) {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool isRotation(string s1, string s2) {
-    return s1.size() == s2.size() && isSubstr(s1+s1, s2);
+    int len = s1.size();
+    if (len = s2.size() && len > 0) {
+    string combined = s1 + s1;
+    return isSubstr(combined, s2);
+    }
+    return false;
 }
 
 

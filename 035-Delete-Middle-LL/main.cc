@@ -39,15 +39,8 @@ void deleteNode(Node * node) {
     delete node;
 }
 
-void deleteNode(Node * node) {
-    Node * tmp = node->next;
-    node->data = tmp->data;
-    node->next = tmp->next;
-    delete tmp;
-}
-
 int main(){
-
+    
     int n,k;
     cin >> n >> k;
     Node * head = nullptr, * tail = nullptr;
@@ -76,6 +69,6 @@ int main(){
         cout << node->data << ' ';
         node = node->next;
     }
-    cout << endl;
+    cout << endl; 
     return 0;
 }
