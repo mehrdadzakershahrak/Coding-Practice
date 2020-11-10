@@ -1,4 +1,6 @@
 {
     "git.ignoreLimitWarning": true,
-    "python.dataScience.jupyterServerURI": "local"
+    "python.dataScience.jupyterServerURI": "local",
+    "editor.cursorBlinking": "smooth",
+    "editor.fontFamily": "Fira Code, Menlo, Monaco, 'Courier New', monospace"
 }
