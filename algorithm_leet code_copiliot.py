@@ -485,3 +485,27 @@ def hasCycle(head: Optional[ListNode]) -> bool:
             return True
     return False
 
+# Given the root of a binary tree, return its maximum depth
+def maxDepth(root: Optional[TreeNode]) -> int:
+    """
+    Given the root of a binary tree, return its maximum depth.
+    """
+    if root is None:
+        return 0
+    return max(maxDepth(root.left), maxDepth(root.right)) + 1
+
+# Given a list of integers, find the index at which the sum of the left half of the list equals the sum of the right half.
+def find_pivot(nums: List[int]) -> int:
+    """
+    Given a list of integers, find the index at which the sum of the left half of the list equals the sum of the right half.
+    """
+    left_sum = 0
+    right_sum = sum(nums)
+    for i in range(len(nums)):
+        right_sum -= nums[i]
+        if left_sum == right_sum:
+            return i
+        left_sum += nums[i]
+    return -1
+
+    
