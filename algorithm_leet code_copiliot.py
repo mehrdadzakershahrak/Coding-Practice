@@ -508,4 +508,189 @@ def find_pivot(nums: List[int]) -> int:
         left_sum += nums[i]
     return -1
 
+# Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+def isValidBST(root: Optional[TreeNode]) -> bool:
+    """
+    Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+    """
+    if root is None:
+        return True
+    if root.left is not None and root.left.val >= root.val:
+        return False
+    if root.right is not None and root.right.val <= root.val:
+        return False
+    return isValidBST(root.left) and isValidBST(root.right)
+
+# Given the root of a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+def isSymmetric(root: Optional[TreeNode]) -> bool:
+    """
+    Given the root of a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+    """
+    if root is None:
+        return True
+    return is_symmetric(root.left, root.right)
+
+# Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+def levelOrder(root: Optional[TreeNode]) -> List[List[int]]:
+    """
+    Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+    """
+    if root is None:
+        return []
+    result = []
+    queue = [root]
+    while queue:
+        level = []
+        for i in range(len(queue)):
+            node = queue.pop(0)
+            level.append(node.val)
+            if node.left is not None:
+                queue.append(node.left)
+            if node.right is not None:
+                queue.append(node.right)
+        result.append(level)
+    return result
+
+# Convert a sorted array to a height balanced BST
+def sortedArrayToBST(nums: List[int]) -> Optional[TreeNode]:
+    """
+    Convert a sorted array to a height balanced BST
+    """
+    if len(nums) == 0:
+        return None
+    mid = len(nums) // 2
+    root = TreeNode(nums[mid])
+    root.left = sortedArrayToBST(nums[:mid])
+    root.right = sortedArrayToBST(nums[mid+1:])
+    return root
+
+# Merge two sorted array into one sorted array in non-decreasing order
+def merge(nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+    """
+    Merge two sorted array into one sorted array in non-decreasing order
+    """
+    i = m - 1
+    j = n - 1
+    k = m + n - 1
+    while i >= 0 and j >= 0:
+        if nums1[i] > nums2[j]:
+            nums1[k] = nums1[i]
+            i -= 1
+        else:
+            nums1[k] = nums2[j]
+            j -= 1
+        k -= 1
+    if j >= 0:
+        nums1[:j+1] = nums2[:j+1]
+
+# You are climbing a stair case. It takes n steps to reach to the top.
+# Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+def climbStairs(n:int) -> int:
+    if n == 1:
+        return 1
+    if n == 2:
+        return 2
+    return self.climbStairs(n-1) + self.climbStairs(n-2)
+
+def maxProfit(prices: List[int]) -> int:
+    """
+    You are given an array of integers prices, for which the i-th element is the price of a given stock on day i; and a non-negative integer fee representing a transaction fee.
+    You may complete as many transactions as you like, but you need to pay the transaction fee for each transaction. You may not buy more than 1 share of a stock at a time (ie. you must sell the stock share before you buy again.)
+    Return the maximum profit you can make.
+    """
+    if len(prices) < 2:
+        return 0
+    profit = 0
+    low = prices[0]
+    for i in range(len(prices) - 1):
+        if prices[i] < low: low = prices[i]
+        profit = max(prices[i] - low, profit)
+    return profit
+
+def maxSubArray(nums: List[int]) -> int:
+    """
+    Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+    """
+    if len(nums) == 0:
+        return 0
+    max_sum = nums[0]
+    cur_sum = nums[0]
+    for i in range(1, len(nums)):
+        cur_sum = max(nums[i], cur_sum + nums[i])
+        max_sum = max(cur_sum, max_sum)
+    return max_sum
+
+def rob(nums: List[int]) -> int:
+    """
+    You are a professional robber planning to rob houses along a street. 
+    Each house has a certain amount of money stashed, the only constraint stopping you from robbing
+    each of them is that adjacent houses have security systems connected
+    and it will automatically contact the police if two adjacent houses were broken into on the same night.
+    """
+    for i in range(len(nums)):
+        if i % 2 == 0:
+            odd = max(odd + nums[i], even)
+        else:
+            even = max(even + nums[i], odd)
+    return max(odd, even)
+
+# Shuffle an array of integers
+def shuffle(nums: List[int], n: int) -> List[int]:
+    """
+    Shuffle an array of integers
+    """
+    if n == 1:
+        return nums
+    for i in range(n):
+        j = random.randint(i, n-1)
+        nums[i], nums[j] = nums[j], nums[i]
+    return nums
+
+# Add two large numbers given in a linked list
+def addTwoNumbers(l1: ListNode, l2: ListNode) -> ListNode:
+    """
+    Add two large numbers given in a linked list
+    """
+    carry = 0
+    head = ListNode(0)
+    cur = head
+    while l1 or l2 or carry:
+        if l1:
+            carry += l1.val
+            l1 = l1.next
+        if l2:
+            carry += l2.val
+            l2 = l2.next
+        cur.next = ListNode(carry % 10)
+        cur = cur.next
+        carry //= 10
+    return head.next
+
+# Given a string s, find the length of the longest substring without repeating characters.
+def lengthOfLongestSubstring(s: str) -> int:
+    chars = {}
+    start, mx = 0,0
     
+    for i in range(len(s)):
+        if s[i] in chars and start <= chars[s[i]]:
+            start = chars[s[i]] + 1
+        else:
+            mx = max(mx, i - start + 1)
+        chars[s[i]] = i
+    return mx
+
+def findMedianSortedArrays(nums1: List[int], nums2: List[int]) -> float:
+    """
+    Find the median of two sorted arrays
+    """
+    nums = nums1 + nums2
+    nums.sort()
+    if len(nums) % 2 == 1:
+        return nums[len(nums) // 2]
+    return (nums[len(nums) // 2] + nums[len(nums) // 2 - 1]) / 2
+
+# Given an integer x, return true if x is palindrome, otherwise return false.
+def isPalindrome(x: int) -> bool:
+    return str(x) == str(x)[::-1]
+
+# Given the head of a linked
