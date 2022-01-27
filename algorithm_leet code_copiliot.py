@@ -693,4 +693,76 @@ def findMedianSortedArrays(nums1: List[int], nums2: List[int]) -> float:
 def isPalindrome(x: int) -> bool:
     return str(x) == str(x)[::-1]
 
-# Given the head of a linked
+# Given the head of a linked list and an integer value, remove all nodes that has Node.val == value.
+def removeElement(head: ListNode, val: int) -> ListNode:
+    """
+    Given the head of a linked list and an integer value, remove all nodes that has Node.val == value.
+    """
+    if not head:
+        return head
+    cur = head
+    while cur.next:
+        if cur.next.val == val:
+            cur.next = cur.next.next
+        else:
+            cur = cur.next
+    if head.val == val:
+        return head.next
+    return head
+
+# Given an integer array nums of size n, return the minumum number of steps required to make all elements equal. 
+# In one step you can increment one of the elements X by 1 or decrement X by 1.
+def minMoves2(nums: List[int]) -> int:
+    median = sorted(nums)[len(nums) // 2]
+    return sum(abs(num - median) for num in nums)
+
+# Given an mxn matrix of distinct numbers, return all lucky numbers in the matrix in any order.
+def luckyNumbers(matrix: List[List[int]]) -> List[int]:
+    m, n = len(matrix), len(matrix[0])
+    min_row = [min(row) for row in matrix]
+    min_col = [max(col) for col in zip(*matrix)]
+    return [min_row[i] for i in range(m) if min_row[i] in min_col]
+
+# Given the root of a binary tree, return the smallest level x such that the sum of all the values of nodes at level x is the maximum possible.
+def maxLevelSum(root: TreeNode) -> int:
+    if not root:
+            return 0   
+    max_level = 0
+    queue = []
+    queue.append(root)
+    levels = []
+    
+    while queue:
+        size = len(queue)
+        level = []
+        for i in range(size):
+            node = queue.pop(0)
+            level.append(node.val)
+            if node.left: 
+                queue.append(node.left)
+            if node.right: 
+                queue.append(node.right)
+        levels.append(sum(level))
+    return levels.index(max(levels)) + 1
+
+# Given a string s and an integer k, return the final string after repeated substring removal.
+def removeDuplicates(s: str, k: int) -> str:
+    stack = [['#', 0]]
+
+    for c in s:
+        if stack[-1][0] == c:
+            stack[-1][1] += 1
+            if stack[-1][1] == k:
+                stack.pop()
+        else:
+            stack.append([c, 1])
+    return "".join([c*i for c, i in stack])
+
+# Given an n * n binary matrix image, flip the image horizontally, then invert it, and return the new image.
+def flipAndInvertImage(image: List[List[int]]) -> List[List[int]]:
+    for row in image:
+        row.reverse()
+        for i in range(len(row)):
+            row[i] = 1 - row[i]
+    return image
+
