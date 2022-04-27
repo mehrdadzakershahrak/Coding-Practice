@@ -766,3 +766,27 @@ def flipAndInvertImage(image: List[List[int]]) -> List[List[int]]:
             row[i] = 1 - row[i]
     return image
 
+# Given an array of distinct integers candidates and a target integer target, return a list of all unique 
+# combinations of candidates where the chosen numbers sum to target.
+# You may return the combinations in any order.
+def combinationSum(candidates: List[int], target: int) -> List[List[int]]:
+    def dfs(candidates, target, path, res):
+            if target == 0:
+                res.append(path)
+                return
+            else:
+                for i in range(len(candidates)):
+                    if candidates[i] > target:
+                        break
+                    dfs(candidates[i:], target - candidates[i], path+[candidates[i]], res)   
+        
+    res = []
+    candidates.sort()
+    dfs(candidates, target, [], res)
+    return res
+
+# Given an array of integers deliciousness where deliciousness[i] is the deliciousness of the i​​​​​​th​​​​​​​​ item of food,
+# return the number of different good meals you can make from this list modulo 109 + 7.
+def countPairs(deliciousness: List[int]) -> int:
+    
+    
